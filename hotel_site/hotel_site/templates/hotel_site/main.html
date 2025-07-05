@@ -1,0 +1,174 @@
+{% extends "hotel_site/base.html" %}
+{% load static %}
+
+
+{% block offcanvasactivepage %}
+    <li class="active"><a href="./index.html">Главная</a></li>
+    <li><a href="{% url 'rooms' %}">Номера</a></li>
+    <li><a href="{% url 'about' %}">О Нас</a></li>
+    <li><a href="{% url 'contacts' %}">Контакты</a></li>
+    {% if request.user.is_authenticated %}
+    <li><a href="{% url 'current_reservations' %}">Текущие брони</a></li>
+    <li><a href="{% url 'history_reservations' %}">История бронирований</a></li>
+    <li><a href="{% url 'logout' %}">Выход</a></li>
+    {% else %}
+    <li><a href="{% url 'register' %}">Регистрация</a></li>
+    <li><a href="{% url 'login' %}">Вход</a></li>
+    {% endif %}
+{% endblock offcanvasactivepage %}
+
+{% block headeractivepage %}
+    <li class="active"><a href="{% url 'home' %}">Главная</a></li>
+    <li><a href="{% url 'rooms' %}">Номера</a></li>
+    <li><a href="{% url 'about' %}">О Нас</a></li>
+    <!-- <li><a href="./pages.html">Pages</a>
+        <ul class="dropdown">
+            <li><a href="./room-details.html">Room Details</a></li>
+            <li><a href="./blog-details.html">Blog Details</a></li>
+            <li><a href="#">Family Room</a></li>
+            <li><a href="#">Premium Room</a></li>
+        </ul>
+    </li> -->
+    <li><a href="{% url 'contacts' %}">Контакты</a></li>
+{% endblock headeractivepage %}
+
+
+{% block maincontent %}
+    <!-- Hero Section Begin -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="hero-text">
+                        <h1>Гостиница Турист</h1>
+                        <p>Лучшее место для туриста. С нами вы запомните свою поздку надолго.</p>
+                        <a href="{% url 'about' %}" class="primary-btn">Узнать больше</a>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
+                    <div class="booking-form">
+                        <h3>Подобрать номер</h3>
+                            <form action="{% url 'rooms'%}" method="get" >
+                                <div class="check-date">
+                                    <label for="date-in">Въезд:</label>
+                                    <input type="date" class="date-in" name="check-in">
+                                </div>
+                                <div class="check-date" >
+                                    <label for="date-out">Выезд:</label>
+                                    <input type="date" class="date-out" name="check-out">
+                                </div>
+                                <div class="select-option">
+                                    <label for="guest">Гости:</label>
+                                    <select class="guests" name="guest">
+                                        <option value="1">1 Гость</option>
+                                        <option value="2">2 Гостя</option>
+                                        <option value="3">3 Гостя</option>
+                                        <option value="4">4 Гостя</option>
+                                    </select>
+                                </div>
+                                <button type="submit">Подобрать номер</button>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-slider owl-carousel">
+            <div class="hs-item set-bg" data-setbg="{% static "img/hero/hero-4.jpg" %}"></div>
+            <div class="hs-item set-bg" data-setbg="{% static "img/hero/hero-5.jpg" %}"></div>
+            <div class="hs-item set-bg" data-setbg="{% static "img/hero/hero-6.jpg" %}"></div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- About Us Section Begin -->
+    <section class="aboutus-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="about-text">
+                        <div class="section-title">
+                            <span>О Нас</span>
+                            <h2>Один из лучших<br />отелей в Минске</h2>
+                        </div>
+                        <p class="f-para"> Гостиница расположена близко к центру города и предлагает гостям комфортабельные номера, 
+                            современный фитнес-центр, рестораны и бары с богатым меню, а также высококачественный сервис.</p>
+                        <p class="s-para">Гостиница идеально подходит как для деловых поездок, так и для отдыха в столице.</p>
+                        <a href="{% url 'about' %}" class="primary-btn about-btn">Узнать больше</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-pic">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <img src="{% static "img/about/about-1.png" %}" alt="">
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="{% static "img/about/about-2.png" %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Us Section End -->
+
+    <!-- Services Section End -->
+    <section class="services-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <span>Что мы можем сделать для Вас</span>
+                        <h2>Узнайте про наши услуги</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-sm-6">
+                    <div class="service-item">
+                        <i class="flaticon-036-parking"></i>
+                        <h4>Туры по городу</h4>
+                        <p>Если главная  цель Вашей поездки - посмотреть город, тогда это то, что Вам нужно.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="service-item">
+                        <i class="flaticon-033-dinner"></i>
+                        <h4>Еда в номер</h4>
+                        <p>Вы можете заказать еду в номер в любое время дня.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="service-item">
+                        <i class="flaticon-026-bed"></i>
+                        <h4>Обслуживание номеров</h4>
+                        <p>По Вашему желанию мы уберем Ваш номер в любое время.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="service-item">
+                        <i class="flaticon-024-towel"></i>
+                        <h4>Прачечная</h4>
+                        <p>Мы можем постирать Вашу одежду, высушить, погладить и отать ее Вам менее чем за сутки. </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="service-item">
+                        <i class="flaticon-044-clock-1"></i>
+                        <h4>Помощь администратора</h4>
+                        <p>Вы можете рассчитывать на ответ администратора на все Ваши вопросы.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="service-item">
+                        <i class="flaticon-012-cocktail"></i>
+                        <h4>Бар & Кафе</h4>
+                        <p>В гостинице есть бар и кафе если Вы хотите перекусить.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Services Section End -->
+{% endblock maincontent %}

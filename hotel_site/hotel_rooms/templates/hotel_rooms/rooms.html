@@ -1,0 +1,116 @@
+{% extends "hotel_site/base.html" %}
+{% load static %}
+{% block offcanvasactivepage %}
+    <li><a href="{% url 'home' %}">Главная</a></li>
+    <li class="active"><a href="{% url 'rooms' %}">Номера</a></li>
+    <li ><a href="{% url 'about' %}">О Нас</a></li>
+    <li><a href="{% url 'contacts' %}">Контакты</a></li>
+    {% if request.user.is_authenticated %}
+    <li><a href="{% url 'current_reservations' %}">Текущие брони</a></li>
+    <li><a href="{% url 'history_reservations' %}">История бронирований</a></li>
+    <li><a href="{% url 'logout' %}">Выход</a></li>
+    {% else %}
+    <li><a href="{% url 'register' %}">Регистрация</a></li>
+    <li><a href="{% url 'login' %}">Вход</a></li>
+    {% endif %}
+{% endblock offcanvasactivepage %}
+
+{% block headeractivepage %}
+    <li><a href="{% url 'home' %}">Главная</a></li>
+    <li class="active"><a href="{% url 'rooms' %}">Номера</a></li>
+    <li ><a href="{% url 'about' %}">О Нас</a></li>
+    <li><a href="{% url 'contacts' %}">Контакты</a></li>
+{% endblock headeractivepage %}
+
+{% block maincontent %}
+<!-- Breadcrumb Section Begin -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <h2>Номера</h2>
+                    <div class="bt-option">
+                        <a href="{% url 'home' %}">Главная</a>
+                        <span>Номера</span>
+                    </div>
+                    
+                    <div class="col-xl-6 offset-xl-3 col-lg-6 offset-lg-3">
+                        <div class="booking-form">
+                            <h3>Фильтр</h3>
+                                <form action="{% url 'rooms_filtered'%}" method="get" >
+                                    <div class="select-option">
+                                        <label for="guest">Гости:</label>
+                                        <select class="guests" name="guest">
+                                            <option value="1">1 Гость</option>
+                                            <option value="2">2 Гостя</option>
+                                            <option value="3">3 Гостя</option>
+                                            <option value="4">4 Гостя</option>
+                                        </select>
+                                    </div>
+                                    <div class="select-option">
+                                    <p>
+                                        <label for="amount">Цена (За ночь):</label>
+                                        <input type="text" id="amount" name="price" readonly style="border:0; color:#dfa974; text-align: center;">
+                                    </p>
+                                    <div id="slider-range"></div>
+                                </div>
+                                    <button type="submit">Подобрать номер</button>
+                                    <!-- <button href = "{% url 'rooms' %}">Сбросить фильтр</button> -->
+                                    <a href="{% url 'rooms' %}"> Сбросить фильтр</a>
+                                </form>
+                        </div>
+                    </div>
+                    
+                    {% if not categories %}
+                    <h2>Под Ваши параметры не найдено ни одного номера</h2>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+
+<!-- Rooms Section Begin -->
+<section class="rooms-section spad">
+    <div class="container">
+        <div class="row">
+            {% for category in categories %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="room-item">
+                        <img src= "{{category.mainphoto.url}}" alt="">
+                            <div class="ri-text">
+                                <h4>{{ category.type }}</h4>
+                                <h3>{{ category.price }}руб.<span>/За ночь</span></h3>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td class="r-o">Размер:</td>
+                                            <td>{{ category.size }} кв.м.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="r-o">Гостей:</td>
+                                            <td>{{ category.people_count }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="r-o">Спальных мест:</td>
+                                            <td>{{ category.beds_count }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="r-o">Удобства:</td>
+                                            <td>{{ category.facilities|truncatechars:10 }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <a href="{{ category.get_absolute_url }}" class="primary-btn">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- Rooms Section End -->
+{% endblock maincontent %}
+

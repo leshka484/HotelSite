@@ -1,0 +1,83 @@
+{% extends "hotel_site/base.html" %}
+{% load static %}
+
+{% block offcanvasactivepage %}
+    <li><a href="{% url 'home' %}">Главная</a></li>
+    <li><a href="{% url 'rooms' %}">Номера</a></li>
+    <li><a href="{% url 'about' %}">О Нас</a></li>
+    <li><a href="{% url 'contacts' %}">Контакты</a></li>
+    {% if request.user.is_authenticated %}
+    <li><a href="{% url 'current_reservations' %}">Текущие брони</a></li>
+    <li><a href="{% url 'history_reservations' %}">История бронирований</a></li>
+    <li><a href="{% url 'logout' %}">Выход</a></li>
+    {% else %}
+    <li><a href="{% url 'register' %}">Регистрация</a></li>
+    <li><a href="{% url 'login' %}">Вход</a></li>
+    {% endif %}
+{% endblock offcanvasactivepage %}
+
+{% block headeractivepage %}
+    <li><a href="{% url 'home' %}">Главная</a></li>
+    <li><a href="{% url 'rooms' %}">Номера</a></li>
+    <li><a href="{% url 'about' %}">О Нас</a></li>
+    <li><a href="{% url 'contacts' %}">Контакты</a></li>
+{% endblock headeractivepage %}
+
+{% block maincontent %}
+{% if reservations %}
+<div class="offset-3 col-6" style="text-align: center;">
+    <h2>Ваши брони</h2>
+</div>
+    <div class="offset-1 col-10" style="align-content: center;">
+        <table class="simple-table">
+            <tr>
+                <td>
+                    №
+                </td>
+                <td>
+                    Тип номера
+                </td>
+                <td>
+                    Номер комнаты
+                </td>
+                <td>
+                    С
+                </td>
+                <td>
+                    По
+                </td>
+                <td>
+                    Цена за проживание
+                </td>
+            </tr>
+            {% for reservation in reservations %}
+            <tr>
+                <td>
+                    {{ forloop.counter }}
+                </td>
+                <td>
+                    {{ reservation.category }}
+                </td>
+                <td>
+                    {{ reservation.room.number }}
+                </td>
+                <td>
+                    {{ reservation.booked_from }}
+                </td>
+                <td>
+                    {{ reservation.booked_to }}
+                </td>
+                <td>
+                    {{ reservation.price }}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% else %}
+    <div class="offset-1 col-10" style="align-content: center;">
+        <h2>У Вас нет текущих бронирований</h2>
+    </div>
+    {% endif %}
+    
+{% endblock maincontent %}

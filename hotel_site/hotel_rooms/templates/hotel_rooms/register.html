@@ -1,0 +1,46 @@
+{% extends "hotel_site/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block offcanvasactivepage %}
+    <li><a href="{% url 'home' %}">Главная</a></li>
+    <li><a href="{% url 'rooms' %}">Номера</a></li>
+    <li><a href="{% url 'about' %}">О Нас</a></li>
+    <li><a href="{% url 'contacts' %}">Контакты</a></li>
+    {% if request.user.is_authenticated %}
+    <li><a href="{% url 'current_reservations' %}">Текущие брони</a></li>
+    <li><a href="{% url 'history_reservations' %}">История бронирований</a></li>
+    <li><a href="{% url 'logout' %}">Выход</a></li>
+    {% else %}
+    <li><a href="{% url 'register' %}">Регистрация</a></li>
+    <li><a href="{% url 'login' %}">Вход</a></li>
+    {% endif %}
+{% endblock offcanvasactivepage %}
+
+{% block headeractivepage %}
+    <li><a href="{% url 'home' %}">Главная</a></li>
+    <li><a href="{% url 'rooms' %}">Номера</a></li>
+    <li ><a href="{% url 'about' %}">О Нас</a></li>
+    <li><a href="{% url 'contacts' %}">Контакты</a></li>
+{% endblock headeractivepage %}
+
+
+
+{% block maincontent %}
+<div class="content-section">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Стать нашим клиентом</legend>
+            {{ form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Регистрация</button>
+        </div>
+    </form>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Уже есть аккаунт? <a class="ml-2" href="{% url 'login' %}">Вход</a>
+        </small>
+    </div>
+</div>
+{% endblock maincontent %}
