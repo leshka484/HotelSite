@@ -37,17 +37,27 @@
    pip install -r requirements.txt
    ```
 
-4. Примените миграции:
+4. Создайте базу данных для приложения в PostgreSQL
+
+5. Добавьте в корень проекта файл .env с содержимым:
+   ```
+   POSTGRES_USER = # Имя пользователя PostgreSQL
+   POSTGRES_PASSWORD = # Пароль пользователя PostgreSQL
+   POSTGRES_HOST = localhost
+   POSTGRES_DB = # Название БД
+   ```
+
+6. Примените миграции:
    ```bash
    python3 manage.py migrate
    ```
 
-5. (Опционально) Создайте суперпользователя:
+7. (Опционально) Создайте суперпользователя:
    ```bash
    python3 manage.py createsuperuser
    ```
 
-6. Запустите сервер разработки:
+8. Запустите сервер разработки:
    ```bash
    python3 manage.py runserver
    ```
