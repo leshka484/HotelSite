@@ -49,6 +49,7 @@
 
 6. Примените миграции:
    ```bash
+   cd hotel_site
    python3 manage.py migrate
    ```
 
